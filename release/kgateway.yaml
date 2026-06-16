@@ -47,4 +47,109 @@ spec:
     - name: frontend
       port: 80
 
+---
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: GRPCRoute
+metadata:
+  name: productcatalog-grpc-route
+spec:
+  parentRefs:
+  - name: frontend-gateway
+  rules:
+  - matches:
+    - method:
+        service: hipstershop.ProductCatalogService
+    backendRefs:
+    - name: productcatalogservice
+      port: 3550
+---
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: GRPCRoute
+metadata:
+  name: currency-grpc-route
+spec:
+  parentRefs:
+  - name: frontend-gateway
+  rules:
+  - matches:
+    - method:
+        service: hipstershop.CurrencyService
+    backendRefs:
+    - name: currencyservice
+      port: 7000
+---
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: GRPCRoute
+metadata:
+  name: cart-grpc-route
+spec:
+  parentRefs:
+  - name: frontend-gateway
+  rules:
+  - matches:
+    - method:
+        service: hipstershop.CartService
+    backendRefs:
+    - name: cartservice
+      port: 7070
+---
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: GRPCRoute
+metadata:
+  name: recommendation-grpc-route
+spec:
+  parentRefs:
+  - name: frontend-gateway
+  rules:
+  - matches:
+    - method:
+        service: hipstershop.RecommendationService
+    backendRefs:
+    - name: recommendationservice
+      port: 8080
+---
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: GRPCRoute
+metadata:
+  name: shipping-grpc-route
+spec:
+  parentRefs:
+  - name: frontend-gateway
+  rules:
+  - matches:
+    - method:
+        service: hipstershop.ShippingService
+    backendRefs:
+    - name: shippingservice
+      port: 50051
+---
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: GRPCRoute
+metadata:
+  name: checkout-grpc-route
+spec:
+  parentRefs:
+  - name: frontend-gateway
+  rules:
+  - matches:
+    - method:
+        service: hipstershop.CheckoutService
+    backendRefs:
+    - name: checkoutservice
+      port: 5050
+---
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: GRPCRoute
+metadata:
+  name: ad-grpc-route
+spec:
+  parentRefs:
+  - name: frontend-gateway
+  rules:
+  - matches:
+    - method:
+        service: hipstershop.AdService
+    backendRefs:
+    - name: adservice
+      port: 9555
 # [END servicemesh_release_istio_manifests_microservices_demo]
