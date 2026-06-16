@@ -21,7 +21,7 @@
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: Gateway
 metadata:
-  name: istio-gateway
+  name: frontend-gateway
 spec:
   gatewayClassName: kgateway
   listeners:
@@ -38,7 +38,7 @@ metadata:
   name: frontend-route
 spec:
   parentRefs:
-  - name: istio-gateway
+  - name: frontend-gateway
   rules:
   - matches:
     - path:
