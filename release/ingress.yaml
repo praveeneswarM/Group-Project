@@ -1,0 +1,81 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend-ingress
+  annotations:
+    # Assuming NGINX Ingress Controller
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grpc-backend-ingress
+  annotations:
+    # This annotation tells NGINX to use gRPC to talk to these backends
+    nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /hipstershop.ProductCatalogService
+        pathType: Prefix
+        backend:
+          service:
+            name: productcatalogservice
+            port:
+              number: 3550
+      - path: /hipstershop.CurrencyService
+        pathType: Prefix
+        backend:
+          service:
+            name: currencyservice
+            port:
+              number: 7000
+      - path: /hipstershop.CartService
+        pathType: Prefix
+        backend:
+          service:
+            name: cartservice
+            port:
+              number: 7070
+      - path: /hipstershop.RecommendationService
+        pathType: Prefix
+        backend:
+          service:
+            name: recommendationservice
+            port:
+              number: 8080
+      - path: /hipstershop.ShippingService
+        pathType: Prefix
+        backend:
+          service:
+            name: shippingservice
+            port:
+              number: 50051
+      - path: /hipstershop.CheckoutService
+        pathType: Prefix
+        backend:
+          service:
+            name: checkoutservice
+            port:
+              number: 5050
+      - path: /hipstershop.AdService
+        pathType: Prefix
+        backend:
+          service:
+            name: adservice
+            port:
+              number: 9555
